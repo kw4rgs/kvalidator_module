@@ -2,10 +2,8 @@ from .extractors.cedula_extractor import cedula_extractor
 from .extractors.dni_extractor import dni_extractor
 from .validators.car_validator import car_validator
 from .validators.cedula_validator import cedula_validator
+from .validators.dni_validator import dni_validator
 
-
-# from .validators.cedula_validator import CedulaValidator
-# from .validators.dni_validator import DniValidator
 # from .validators.licencia_validator import LicenciaValidator
 
 """
