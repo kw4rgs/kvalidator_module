@@ -1,6 +1,5 @@
 fastapi
 uvicorn
-python-dotenv
 pydantic
 httpx
 opencv-python
@@ -9,3 +8,5 @@ numpy
 tensorflow
 pytesseract
 zxing
+
+

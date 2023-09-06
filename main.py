@@ -54,4 +54,4 @@ async def licencia_back_validator_endpoint(data: dict):
     return validate
 
 if __name__ == "__main__":
-    uvicorn.run("main:app", host="127.0.0.1", port=6969, reload=True, workers=1)
+    uvicorn.run(app, host="127.0.0.1", port=6969, reload=True, workers=1)
