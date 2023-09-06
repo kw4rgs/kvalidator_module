@@ -36,6 +36,9 @@ def car_validator(data: dict):
             return {'error': 'No image data was provided'}
         car_validator_instance = CarValidator(model_path)
         result = car_validator_instance.predict_base64_image(image_data)
-        return {'is_car': result}
+        
+        if result is None:
+            return {'error': 'An error occurred while processing the image'}
+        return {'is_valid': result}
     except Exception as e:
         return {'error': f'An unexpected error occurred: {e}'}

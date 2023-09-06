@@ -1,6 +1,7 @@
 from .extractors.cedula_extractor import cedula_extractor
 from .extractors.dni_extractor import dni_extractor
 from .validators.car_validator import car_validator
+from .validators.cedula_validator import cedula_validator
 
 
 # from .validators.cedula_validator import CedulaValidator
@@ -12,5 +13,5 @@ kvalidator: Un paquete Python que contiene extractores y validadores para docume
 """
 # __all__ = ["CedulaExtractor", "DniExtractor", "CedulaValidator", "DniValidator", "LicenciaValidator", "CarValidator"]
 
-# __version__ = "1.0.0"
+__version__ = "1.0.0"
 

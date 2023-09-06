@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 import uvicorn
-from kvalidator import cedula_extractor, dni_extractor, car_validator
+from kvalidator import cedula_extractor, dni_extractor, car_validator, cedula_validator
 
 app = FastAPI()
 
@@ -32,6 +32,11 @@ async def dni_endpoint(data: dict):
 @app.post("/api/v1/validator/car")
 async def car_endpoint(data: dict):
     validate = car_validator(data)
+    return validate
+
+@app.post("/api/v1/validator/cedula")
+async def cedula_endpoint(data: dict):
+    validate = cedula_validator(data)
     return validate
 
 

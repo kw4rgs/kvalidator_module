@@ -54,6 +54,8 @@ def cedula_extractor(data: dict):
         image_bytes = base64.b64decode(image_data)
         cedula_extractor = CedulaExtractor()
         extracted_data = cedula_extractor.extract_cedula_data(image_bytes)
+        if extracted_data is None:
+            return {'error': 'No data was extracted from the image'}
         return extracted_data
     except Exception as e:
         return {'error': f'An unexpected error occurred: {e}'}

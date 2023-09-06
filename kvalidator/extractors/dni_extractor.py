@@ -56,6 +56,8 @@ def dni_extractor(data: dict):
         image_bytes = base64.b64decode(image_data)
         dni_extractor = DNIExtractor()  
         extracted_data = dni_extractor.extract_dni_data(image_bytes)
+        if extracted_data is None:
+            return {'error': 'No data was extracted from the image'}
         return extracted_data
     except Exception as e:
         return {'error': f'An unexpected error occurred: {e}'}
