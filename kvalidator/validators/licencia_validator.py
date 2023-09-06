@@ -1,5 +1,3 @@
-from fastapi import APIRouter, status, HTTPException
-from fastapi.responses import JSONResponse
 import cv2
 import numpy as np
 import base64
@@ -53,9 +51,9 @@ class LicenciaBackValidator:
         self.threshold = 0.70
 
     def load_references(self):
-        lnc_logo_1 = cv2.imread('app/assets/kw4rgs_logo_collection/licencia_back/lnc_back.png', cv2.IMREAD_GRAYSCALE)
-        lnc_logo_2 = cv2.imread('app/assets/kw4rgs_logo_collection/licencia_back/grupo.png', cv2.IMREAD_GRAYSCALE)
-        lnc_logo_3 = cv2.imread('app/assets/kw4rgs_logo_collection/licencia_back/escudocolor.png', cv2.IMREAD_GRAYSCALE)
+        lnc_logo_1 = cv2.imread('kvalidator/validators/assets/kw4rgs_logo_collection/licencia_back/lnc_back.png', cv2.IMREAD_GRAYSCALE)
+        lnc_logo_2 = cv2.imread('kvalidator/validators/assets/kw4rgs_logo_collection/licencia_back/grupo.png', cv2.IMREAD_GRAYSCALE)
+        lnc_logo_3 = cv2.imread('kvalidator/validators/assets/kw4rgs_logo_collection/licencia_back/escudocolor.png', cv2.IMREAD_GRAYSCALE)
         return [lnc_logo_1, lnc_logo_2, lnc_logo_3]
 
     def enhance_image(self, img_gray):
@@ -70,7 +68,7 @@ class LicenciaBackValidator:
         img = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
 
         img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-        enhanced_image = self.enhance_image(img_gray)  # Enhance the grayscale image
+        enhanced_image = self.enhance_image(img_gray) 
 
         found_logos = []
 
@@ -121,42 +119,37 @@ class LicenciaBackValidatorAlt():
         prepro_image = self.image_processor.process_image(image_base64)
         extracted_text = self.text_extractor.extract_text(prepro_image)
         found_keywords = self.keyword_checker.check_keywords(extracted_text)
-
         return bool(found_keywords)
 
-router = APIRouter(prefix="/api/v1/validator/licencia", tags=["Licencia validator"], responses={404: {"description": "Not found"}})
-
-validator_instance_front = LicenciaFrontValidator()
-validator_instance_back = LicenciaBackValidator()
-validator_instance_back_alt = LicenciaBackValidator()
-
-@router.post("/front", status_code=status.HTTP_200_OK, response_description="kw4rgs's licencia's front validator")
-async def licencia_front_validator(data: dict) -> dict:
+def licencia_front_validator(data: dict):
     try:
         image_data = data.get('data')
-        is_valid = validator_instance_front.validate(image_data)
-        if is_valid:
-            response_content = {'error': False, 'data': 'This is a valid licencia front image'}
-        else:
-            response_content = {'error': True, 'data': 'This is not a valid licencia front image'}
-
-        return JSONResponse(content=response_content, status_code=status.HTTP_200_OK)
-
+        if image_data is None:
+            return {'error': 'No image data was provided'}
+        validator_instance_front = LicenciaFrontValidator()
+        result = validator_instance_front.validate(image_data)
+        if result is None:
+            return {'error': 'An error occurred while processing the image'}
+        return {'is_valid': result}
     except Exception as e:
-        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))
+        return {'error': f'An unexpected error occurred: {e}'}
 
-@router.post("/back", status_code=status.HTTP_200_OK, response_description="kw4rgs's licencia's back validator")
-async def licencia_front_validator(data: dict) -> dict:
+
+def licencia_back_validator(data: dict):
     try:
         image_data = data.get('data')
+        if image_data is None:
+            return {'error': 'No image data was provided'}
+        validator_instance_back = LicenciaBackValidator()
+        validator_instance_back_alt = LicenciaBackValidatorAlt()
+        
         is_valid = validator_instance_back.validate(image_data)
+        is_valid_alt = validator_instance_back_alt.validate(image_data)
 
-        if is_valid or validator_instance_back_alt.validate(image_data):
-            response_content = {'error': False, 'data': 'This is a valid licencia back image'}
-        else:
-            response_content = {'error': True, 'data': 'This is not a valid licencia back image'}
-
-        return JSONResponse(content=response_content, status_code=status.HTTP_200_OK)
-
+        result = is_valid or is_valid_alt
+            
+        if result is None:
+            return {'error': 'An error occurred while processing the image'}
+        return {'is_valid': result}
     except Exception as e:
-        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,detail=str(e))
+        return {'error': f'An unexpected error occurred: {e}'}

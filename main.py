@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 import uvicorn
-from kvalidator import cedula_extractor, dni_extractor, car_validator, cedula_validator, dni_validator
+from kvalidator import cedula_extractor, dni_extractor, car_validator, cedula_validator, dni_validator, licencia_front_validator, licencia_back_validator
 
 app = FastAPI()
 
@@ -13,6 +13,7 @@ def health_Check():
 # Extractor endpoints
     # Cedula
     # DNI
+    
 @app.post("/api/v1/extractor/cedula")
 async def cedula_endpoint(data: dict):
     extracted_data = cedula_extractor(data)
@@ -45,6 +46,18 @@ async def cedula_endpoint(data: dict):
 @app.post("/api/v1/validator/dni")
 async def dni_back_endpoint(data: dict):
     validate = dni_validator(data)
+    return validate
+
+# Licencia Front
+@app.post("/api/v1/validator/licencia/front")
+async def licencia_back_endpoint(data: dict):
+    validate = licencia_front_validator(data)
+    return validate
+
+# Licencia Back
+@app.post("/api/v1/validator/licencia/back")
+async def licencia_back_endpoint(data: dict):
+    validate = licencia_back_validator(data)
     return validate
 
 
