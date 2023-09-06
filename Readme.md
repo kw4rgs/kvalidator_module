@@ -1,9 +1,9 @@
 <div align="center">
-  <img src="https://github.com/kw4rgs/kvalidators/blob/4e55a4d7877eecc9e35bee3d58ac584b8ecdbd7a/kvalidator.png" alt="kvalidator_logo">
+  <img src="https://github.com/kw4rgs/kvalidator_module/blob/e0b111b9b1e23a040ef6f3e7445154446ddc5239/kvalidator_pk_logo.png" alt="kvalidator_logo">
 </div>
 
 # kvalidator: Image validators and data extractors
- 
+
 
 The Kw4rgs's Document/Image Validation and Data Extraction is a powerful tool that combines:
 
