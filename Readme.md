@@ -58,7 +58,7 @@ pip  install  kvalidator
 
   
 
-Make sure you have the following dependencies installed:
+Make sure you have the following dependencies installed (also you can install these from the requirements.txt):
 
   
 
