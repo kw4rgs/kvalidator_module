@@ -53,7 +53,7 @@ The Car Validator feature of the KVALIDATOR employs a trained TensorFlow model a
 ## Installation
 
 
-Clone the repository and install kvalidator using pip:
+Clone the repository and install kvalidator using pip (or place it into any directory you want)):
 
   
 
@@ -256,9 +256,9 @@ You have to pass the image (str) as a key:value (dict), like this:
 
 - [PyTesseract Documentation](https://pypi.org/project/pytesseract/)
 
+- [OpenCV Documentation](https://opencv.org/)
 
   
-
 ## Future Plans
 
   
