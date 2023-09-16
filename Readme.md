@@ -56,10 +56,19 @@ The Car Validator feature of the KVALIDATOR employs a trained TensorFlow model a
 Clone the repository and install kvalidator using pip (or place it into any directory you want)):
 
   
+It is very important to have installed in your computer the java SDK :
+
+
+* openjdk 11.0.20
+
+
+And also you will need tesseract on your machine (spanish version):
 
 ```bash
 
-pip  install  kvalidator
+sudo apt-get install tesseract-ocr -y
+
+sudo apt-get install tesseract-ocr-spa -y
 
 ```
 
@@ -72,14 +81,6 @@ Make sure you have the following dependencies installed (also you can install th
 ```bash
 
 pip  install  pydantic  httpx  opencv-python  pyzbar  numpy  tensorflow  pytesseract  zxing
-
-```
-And also you will need tesseract on your machine (spanish version):
-```bash
-
-sudo apt-get install tesseract-ocr -y
-
-sudo apt-get install tesseract-ocr-spa -y
 
 ```
   
